@@ -153,6 +153,7 @@ Here's an updated example of a user preference modeled as a custom ActivityPub a
   "interests": ["Open Source", "Sustainability"],
   "exclusions": ["Alcohol", "Gambling"]
 }
+```
 
 #### Sections Explained
 ##### User Preferences: This includes general settings such as ad frequency and preferred formats. It aligns with the user's overall ad experience expectations.
