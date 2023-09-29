@@ -22,4 +22,6 @@ Each of the following topics links to a detailed section within the document:
 
 8. [**Monetization**](./docs/Decentralized_Advertising_Fediverse_ActivityPub.md#monetization): Revenue generation and distribution models, including Pay-Per-Click (PPC), Pay-Per-Impression (PPI), and Pay-Per-Interaction (PPIx).
 
+## More
+
 The proposed system addresses the core challenge of revenue generation for the Fediverse, ensuring its longevity while respecting user privacy and providing value to advertisers. For more details, please refer to the [full document](./docs/Decentralized_Advertising_Fediverse_ActivityPub.md).
