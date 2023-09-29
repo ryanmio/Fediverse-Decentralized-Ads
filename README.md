@@ -1,0 +1,29 @@
+# Decentralized Advertising in the Fediverse Using ActivityPub
+
+This README provides an overview of a document that proposes a decentralized advertising system for the Fediverse using the ActivityPub protocol. The system aims to provide a viable revenue stream for server operators and content creators, while respecting user privacy and control.
+
+## Key Features
+
+Each of the following topics links to a detailed section within the document:
+
+1. [**Ads as Activities**](#ads-as-activities): Advertisements are treated as specialized ActivityPub activities, allowing for native distribution and interaction within the Fediverse.
+
+2. [**User Preferences**](#user-preferences): Users have granular control over the type of ads they see, with options to fine-tune or opt-out.
+
+3. [**Server-Side Logic**](#server-side-logic): Handles ad validation, user matching, ad display, metrics collection, and revenue distribution.
+
+4. [**Client Extensions**](#client-extensions): Modifications to ActivityPub clients for a seamless user experience, including ad preferences UI, ad display, ad interactions, and opt-out option.
+
+5. [**Advertiser Interaction**](#advertiser-interaction): Advertisers can create, target, and track ads within the ActivityPub framework.
+
+6. [**Metrics & Reporting**](#metrics-reporting): Collection of key metrics such as impressions, clicks, and other interactions for insights and optimization.
+
+7. [**Opt-Out & Consent**](#opt-out-consent): Mechanisms for user opt-out and consent management.
+
+8. [**Monetization**](#monetization): Revenue generation and distribution models, including Pay-Per-Click (PPC), Pay-Per-Impression (PPI), and Pay-Per-Interaction (PPIx).
+
+The document also outlines a strategy for [pilot testing and feedback collection](#pilot-testing-feedback) before wider release.
+
+## Conclusion
+
+The proposed system addresses the core challenge of revenue generation for the Fediverse, ensuring its longevity while respecting user privacy and providing value to advertisers. For more details, please refer to the [full document](#full-document).
