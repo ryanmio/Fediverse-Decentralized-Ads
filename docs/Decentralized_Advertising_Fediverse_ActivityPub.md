@@ -46,7 +46,11 @@ Ads in this system are represented as specialized ActivityPub activities, allowi
 
 3. **Structured Metadata**: Ads can carry additional metadata such as target demographics, monetization pointers, and more, all within the ActivityPub JSON-LD context.
 
-For example, an ad activity could look like this:
+This structure makes it easier for both servers and clients to handle ads in a standardized way, while providing advertisers with the ability to target their messages effectively.
+
+#### Data Model
+
+Ads are defined as a custom ActivityPub `type` called `Ad`. Here is an example data model for an ad:
 
 ```json
 {
@@ -68,11 +72,6 @@ For example, an ad activity could look like this:
   }
 }
 ```
-This structure makes it easier for both servers and clients to handle ads in a standardized way, while providing advertisers with the ability to target their messages effectively.
-
-#### Data Model
-
-Ads are defined as a custom ActivityPub `type` called `Ad`. Here is an example data model for an ad:
 
 ```json
 {
@@ -209,7 +208,6 @@ Here's an example of a user preference modeled as a custom ActivityPub activity:
   // An array of exclusion tags. These tags are used to exclude certain categories of ads from being displayed to the user.
 }
 ```
-
 #### Server-Side Handling
 
 ##### Preference Matching: When an ad is received, the server uses these preferences to decide which users are eligible to see the ad.
@@ -230,7 +228,7 @@ Here's an example of a user preference modeled as a custom ActivityPub activity:
 
 ### Server-Side Logic
 
-The server-side logic is central to the effective functioning of this decentralized advertising system. It handles ad validation, user matching, ad display, metrics collection, and revenue distribution. This section outlines the core responsibilities and implementation details for server-side logic.
+Server-side logic handles ad validation, user matching, ad display, metrics collection, and revenue distribution. This section outlines the core responsibilities and implementation details for server-side logic.
 
 #### Core Responsibilities
 
@@ -257,8 +255,6 @@ The server-side logic is central to the effective functioning of this decentrali
 5. **Metrics API**: Expose an API endpoint for advertisers to fetch metrics or send them as ActivityPub activities.
 
 6. **Payment Logic**: Implement server-side logic for handling payments and revenue distribution, which could be based on standard payment pointers or integrated payment APIs.
-
-By addressing these responsibilities, servers act as the linchpin that ties advertisers, users, and monetization together in a cohesive, efficient, and privacy-respecting manner.
 
 ### Client Extensions
 
@@ -290,7 +286,7 @@ By implementing these features, ActivityPub clients can provide a user-friendly,
 
 ### Advertiser Interaction
 
-Advertisers play a crucial role in this ecosystem. This section outlines how advertisers can create, target, and track ads within the ActivityPub framework.
+By making advertisers ActivityPub actors, they can utilize the existing ActivityPub infrastructure for creating, distributing, and tracking ads. This section outlines how advertisers can create, target, and track ads within the ActivityPub framework.
 
 #### Ad Creation and Targeting
 ##### Ad Creation Methods: Advertisers have the flexibility to create ads using various methods. They can utilize a client that supports ad creation or employ a standalone tool that sends ActivityPub activities. Given the decentralized nature of the system, anyone can develop a tool for this purpose.
@@ -298,15 +294,6 @@ Advertisers play a crucial role in this ecosystem. This section outlines how adv
 ##### Ad Targeting: Advertisers can specify targeting criteria that match against user AdPreferences.
 
 ##### Publishing & Distribution: Once an ad is created, it's published as an ActivityPub activity and federated to appropriate servers based on the targeting criteria.
-
-#### Metrics and Reporting
-##### Metrics Collection: Servers collect metrics like views, clicks, and interactions and send them back to advertisers.
-
-##### Dashboard: Advertisers could have a dashboard to view these metrics in real-time.
-
-##### API for Metrics: A metrics API can be exposed for more advanced analytics and reporting needs.
-
-By making advertisers ActivityPub actors, they can utilize the existing ActivityPub infrastructure for creating, distributing, and tracking ads. This ensures a unified and efficient experience for all stakeholders.
 
 ### Metrics & Reporting
 
@@ -332,11 +319,9 @@ Effective advertising is data-driven. This section details how metrics are colle
 
 4. **Data Aggregation**: Metrics are aggregated at the server level to anonymize data and comply with privacy regulations.
 
-By meticulously collecting and presenting these metrics, advertisers can gain valuable insights into their campaigns, enabling data-driven decisions for better ROI.
-
 ### Opt-Out & Consent
 
-User consent and the ability to opt-out are paramount in a privacy-respecting ad ecosystem. This section describes the mechanisms for user opt-out and how consent is managed.
+This section describes the mechanisms for user opt-out and how consent is managed.
 
 #### Core Features
 
@@ -354,11 +339,9 @@ User consent and the ability to opt-out are paramount in a privacy-respecting ad
   
 2. **Server Logic**: The server should respect opt-out settings and category exclusions when distributing ads.
 
-3. **Legal Texts**: Prepare GDPR and other privacy regulation-compliant texts for data use and consent forms.
+3. **ActivityPub Flags**: Use ActivityPub activities or flags in user profiles to indicate their opt-out or consent status.
 
-4. **ActivityPub Flags**: Use ActivityPub activities or flags in user profiles to indicate their opt-out or consent status.
-
-By implementing these features, the system ensures users have complete control over their data and ad experience while staying compliant with privacy laws.
+By implementing these features, the system ensures users have complete control over their data and ad experience.
 
 ### Monetization
 
@@ -394,13 +377,9 @@ By clearly defining monetization models and revenue distribution mechanisms, the
 
 ## Security & Fraud Prevention
 
-Online advertising is susceptible to various types of fraud and malicious activities. This section outlines safeguards.
-
 1. **Rate Limiting**: Implement server-side rate limiting to prevent ad spam.
   
 2. **Validation**: Rigorous validation of ad activities to prevent malicious content.
-
-3. **Anomaly Detection**: Real-time monitoring for unusual patterns indicating fraud.
 
 ## Compliance
 
