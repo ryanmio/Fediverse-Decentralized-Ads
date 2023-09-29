@@ -12,9 +12,7 @@
    6. [Metrics & Reporting](#metrics--reporting)
    7. [Opt-Out & Consent](#opt-out--consent)
    8. [Monetization](#monetization)
-4. [Security & Fraud Prevention](#security--fraud-prevention)
-5. [Compliance](#compliance)
-6. [Pilot Testing & Feedback](#pilot-testing--feedback)
+4. [Pilot Testing & Feedback](#pilot-testing--feedback)
 
 ## Introduction
 
@@ -374,20 +372,6 @@ Monetization is a key motivator for both advertisers and content creators. This 
 4. **ActivityPub Revenue Activities**: Specialized ActivityPub activities can be used to record and notify of revenue events.
 
 By clearly defining monetization models and revenue distribution mechanisms, the ad system aims to be a profitable venture for all parties involved, while maintaining user trust and engagement.
-
-## Security & Fraud Prevention
-
-1. **Rate Limiting**: Implement server-side rate limiting to prevent ad spam.
-  
-2. **Validation**: Rigorous validation of ad activities to prevent malicious content.
-
-## Compliance
-
-1. **GDPR**: Ensure all data collection and processing is GDPR-compliant.
-  
-2. **CCPA**: Similar compliance needs for California residents.
-
-3. **Data Minimization**: Collect only the data necessary for the functioning of the ad system.
 
 ## Pilot Testing & Feedback
 
