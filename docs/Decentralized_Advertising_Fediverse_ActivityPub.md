@@ -18,7 +18,7 @@
 
 ## Introduction
 
-The Fediverse, a decentralized network of social media platforms, offers a privacy-focused alternative to traditional, centralized platforms. However, its growth and sustainability face significant challenges due to a lack of viable monetization options. Server maintenance and moderation require financial resources, and relying solely on volunteers and donations is not scalable. This document proposes a decentralized advertising system built atop the ActivityPub protocol as a solution to these challenges. The system aims to provide relevant, user-controlled advertising that respects privacy, offers robust monetization, and seamlessly integrates with the existing ActivityPub ecosystem.
+The Fediverse, a decentralized network of social media platforms, offers an alternative to traditional, centralized platforms. However, its growth and sustainability face significant challenges due to a lack of viable monetization options. Server maintenance and moderation require financial resources, and relying solely on volunteers and donations is not scalable. This document proposes a decentralized advertising system built atop the ActivityPub protocol as a solution to these challenges. The system aims to provide relevant, user-controlled advertising that respects privacy, offers robust monetization, and seamlessly integrates with the existing ActivityPub ecosystem.
 
 ## Goals
 
@@ -35,6 +35,7 @@ The Fediverse, a decentralized network of social media platforms, offers a priva
 ## ActivityPub Integration
 
 ### Ads as Activities
+
 In this architecture, advertisements are treated as specialized ActivityPub activities, encoded in JSON-LD. This approach aims to unify the advertising model with the existing ActivityPub standards, making it easier for developers to implement the system.
 
 Ads in this system are represented as specialized ActivityPub activities, allowing for native distribution and interaction within the Fediverse. By using activities, ads gain several advantages:
@@ -49,11 +50,22 @@ For example, an ad activity could look like this:
 
 ```json
 {
-  "@context": "https://www.w3.org/ns/activitystreams",
-  "type": "Ad",
-  "content": "Buy this cool product!",
-  "targetDemographics": ["18-35", "Tech enthusiasts"],
-  "monetization": "payment_pointer_here"
+  "@context": [
+    "https://www.w3.org/ns/activitystreams",
+    {
+      "ad": "https://example.com/schema/Ad"
+    }
+  ],
+  "id": "unique_ad_id",
+  "type": "ad:Ad",
+  "actor": "advertiser_account_uri",
+  "content": "Discover our new eco-friendly smartwatch. Track your fitness goals while caring for the planet.",
+  "targetDemographics": ["18-35", "Tech enthusiasts", "Environmentally conscious"],
+  "budget": 1000,
+  "monetization": {
+    "platform": "platform_payment_pointer",
+    "creator": "creator_payment_pointer"
+  }
 }
 ```
 This structure makes it easier for both servers and clients to handle ads in a standardized way, while providing advertisers with the ability to target their messages effectively.
@@ -70,15 +82,56 @@ Ads are defined as a custom ActivityPub `type` called `Ad`. Here is an example d
       "ad": "https://example.com/schema/Ad"
     }
   ],
+  // The context defines the interpretation of the activity. It includes the standard ActivityPub context and a custom context for the ad.
+
+  "id": "unique_ad_id",
+  // A unique identifier for the ad. It should be a unique string that can be used to track and identify the ad.
+
   "type": "ad:Ad",
+  // The type of the activity. In this case, it's `ad:Ad`, indicating that this activity is an ad.
+
+  "actor": "advertiser_account_uri",
+  // The URI of the advertiser's account. It allows for accountability and tracking of who created the ad.
+
   "content": "String containing the ad content",
+  // The content of the ad. It should be a string containing the ad message.
+
   "targetDemographics": ["Array", "of", "demographic", "tags"],
+  // An array of demographic tags. These tags are used to target the ad to specific demographics.
+
+  "budget": "Total budget for the ad campaign",
+  // The total budget for the ad campaign. It can be used for ad distribution logic.
+
   "monetization": {
     "platform": "platform_payment_pointer",
     "creator": "creator_payment_pointer"
   }
+  // An object that includes payment pointers for both the platform and the content creator. It's used for revenue sharing.
 }
 ```
+1. @context: This is a standard field in ActivityPub activities. It defines the context in which the activity is interpreted. In this case, it includes the standard ActivityPub context and a custom context for the ad.
+   The custom context "ad": "https://example.com/schema/Ad" is a URL where the schema for the custom ad:Ad type is defined. This allows for extensibility and custom properties for ads.
+
+2. id: This is a unique identifier for the ad. It should be a unique string that can be used to track and identify the ad.
+
+3. type: This is the type of the activity. In this case, it's ad:Ad, indicating that this activity is an ad.
+
+4. actor: This is the URI of the advertiser's account. It allows for accountability and tracking of who created the ad.
+   "actor": "advertiser_account_uri",
+
+5. content: This is the content of the ad. It should be a string containing the ad message.
+
+6. targetDemographics: This is an array of demographic tags. These tags are used to target the ad to specific demographics.
+
+7. budget: This is the total budget for the ad campaign. It can be used for ad distribution logic.
+
+8. monetization: This is an object that includes payment pointers for both the platform and the content creator. It's used for revenue sharing.
+   "monetization": {
+     "platform": "platform_payment_pointer",
+     "creator": "creator_payment_pointer"
+   }
+
+
 #### Server-Side Handling
 ##### Validation: When an ad activity is received, the server should validate the JSON-LD against the predefined schema for ad:Ad. Any non-compliant activities should be rejected.
 
@@ -108,59 +161,57 @@ Here's an example of a user preference modeled as a custom ActivityPub activity:
 {
   "@context": "https://www.w3.org/ns/activitystreams",
   "type": "AdPreferences",
-  "actor": "user_account_uri",
-  "categories": ["Tech", "Fashion"],
-  "ageRange": "18-35",
-  "exclude": ["Alcohol", "Gambling"]
-}
-```
-
-#### Server-Side Handling
-##### Preference Matching: When an ad is received, the server uses these preferences to decide which users are eligible to see the ad.
-
-##### Updating Preferences: Servers should listen for updates to this AdPreferences activity to refresh user preferences in real-time.
-
-#### lient-Side Handling
-##### UI for Preferences: Clients should provide an intuitive UI where users can set and update their ad preferences.
-
-##### Local Storage: These preferences can be stored locally on the client and synced with the server.
-
-#### Advantages
-##### User Autonomy: Users can fine-tune their ad experience, enabling or disabling categories as they see fit.
-
-##### Privacy: All preferences are stored within the ActivityPub ecosystem, ensuring data isn't shared with external parties.
-
-##### Dynamic Updating: As users change their preferences, these updates are immediately reflected in the ads they see, thanks to real-time syncing between clients and servers.
-
-### User Preferences
-
-User preferences for advertisements are treated as specialized ActivityPub activities or as custom fields in a user's ActivityPub profile. This approach is inspired by the original `ads.fed.json` concept and enhances it within the ActivityPub framework.
-
-#### Data Model
-
-Here's an updated example of a user preference modeled as a custom ActivityPub activity:
-
-```json
-{
-  "@context": "https://www.w3.org/ns/activitystreams",
-  "type": "AdPreferences",
-  "actor": "user_account_uri",
+  "actor": "https://example.com/users/john_doe",
+  "timestamp": "2022-01-01T00:00:00Z",
   "preferences": {
     "frequency": "Low",
     "format": ["Image", "Text"],
     "categories": ["Tech", "Fashion"]
   },
   "interests": ["Open Source", "Sustainability"],
+  "keywords": ["Python", "Zero Waste"],
   "exclusions": ["Alcohol", "Gambling"]
 }
 ```
 
-#### Sections Explained
-##### User Preferences: This includes general settings such as ad frequency and preferred formats. It aligns with the user's overall ad experience expectations.
+```json
+{
+  "@context": "https://www.w3.org/ns/activitystreams",
+  // The context defines the interpretation of the activity. It includes the standard ActivityPub context.
 
-##### Interests and Keywords: This houses specific interests and keywords that the user wants to see ads about. Also includes 'exclusion keywords' for topics they don't want ads about, enhancing ad relevance.
+  "type": "AdPreferences",
+  // The type of the activity. In this case, it's `AdPreferences`, indicating that this activity is for storing user's ad preferences.
+
+  "actor": "user_account_uri",
+  // The URI of the user's account. It allows for accountability and tracking of who created the preferences.
+
+  "timestamp": "ISO_8601_timestamp",
+  // An ISO 8601 timestamp that represents when the `AdPreferences` activity was last updated.
+
+  "preferences": {
+    "frequency": "Preferred ad frequency",
+    // The preferred frequency of ads. It should be a string like "Low", "Medium", "High", or "None".
+
+    "format": ["Preferred", "ad", "formats"],
+    // An array of preferred ad formats. These could be strings like "Image", "Text", "Video", etc.
+
+    "categories": ["Preferred", "ad", "categories"]
+    // An array of preferred ad categories. These could be strings like "Tech", "Fashion", "Sports", etc.
+  },
+
+  "interests": ["Array", "of", "interest", "tags"],
+  // An array of interest tags. These tags are used to match ads to the user's interests.
+
+  "keywords": ["Array", "of", "keywords"],
+  // An array of keywords that represent the user's interests. These keywords can be used to match ads to the user's interests in addition to the `interests` field.
+
+  "exclusions": ["Array", "of", "exclusion", "tags"]
+  // An array of exclusion tags. These tags are used to exclude certain categories of ads from being displayed to the user.
+}
+```
 
 #### Server-Side Handling
+
 ##### Preference Matching: When an ad is received, the server uses these preferences to decide which users are eligible to see the ad.
 
 ##### Updating Preferences: Servers should listen for updates to this AdPreferences activity to refresh user preferences in real-time.
@@ -176,7 +227,6 @@ Here's an updated example of a user preference modeled as a custom ActivityPub a
 ##### Privacy: All preferences are stored within the ActivityPub ecosystem, ensuring data isn't shared with external parties.
 
 #####Dynamic Updating: As users change their preferences, these updates are immediately reflected in the ads they see, thanks to real-time syncing between clients and servers.
-
 
 ### Server-Side Logic
 
@@ -242,21 +292,8 @@ By implementing these features, ActivityPub clients can provide a user-friendly,
 
 Advertisers play a crucial role in this ecosystem. This section outlines how advertisers can create, target, and track ads within the ActivityPub framework.
 
-#### Data Model
-
-Advertisers are specialized ActivityPub actors with the ability to create `ad:Ad` activities. The ad creation process involves specifying various fields:
-
-```json
-{
-  "type": "ad:Ad",
-  "content": "Check out our new product!",
-  "targetDemographics": ["18-35", "Tech Enthusiasts"],
-  "budget": 1000
-}
-```
-
 #### Ad Creation and Targeting
-##### UI for Advertisers: Advertisers use a specialized client to create an ad, filling in the necessary fields.
+##### Ad Creation Methods: Advertisers have the flexibility to create ads using various methods. They can utilize a client that supports ad creation or employ a standalone tool that sends ActivityPub activities. Given the decentralized nature of the system, anyone can develop a tool for this purpose.
 
 ##### Ad Targeting: Advertisers can specify targeting criteria that match against user AdPreferences.
 
@@ -367,8 +404,6 @@ Online advertising is susceptible to various types of fraud and malicious activi
 
 ## Compliance
 
-Legal compliance is non-negotiable. Here are key considerations:
-
 1. **GDPR**: Ensure all data collection and processing is GDPR-compliant.
   
 2. **CCPA**: Similar compliance needs for California residents.
@@ -377,12 +412,17 @@ Legal compliance is non-negotiable. Here are key considerations:
 
 ## Pilot Testing & Feedback
 
-Before a full-scale rollout, a pilot test is essential.
-
 1. **Alpha Test**: Limited initial rollout to a small user and advertiser base.
   
 2. **Feedback Mechanism**: Easy ways for testers to provide feedback.
 
 3. **Iterations**: Use feedback for iterative improvements before wider release.
 
-By carefully planning and executing each of these aspects, the decentralized ad system aims to be robust, secure, and legally compliant while providing value to all stakeholders.
+
+## Conclusion
+
+This document outlines a robust strategy for implementing a decentralized advertising system in the Fediverse using ActivityPub. The proposed system addresses the core challenge of revenue generation, which has been a significant hurdle for the sustainability of the Fediverse. By introducing a revenue model that respects user privacy and provides value to advertisers, we can ensure the longevity of the Fediverse.
+
+
+
+
