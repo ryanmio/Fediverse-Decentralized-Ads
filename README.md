@@ -6,24 +6,24 @@ This README provides an overview of a document that proposes a decentralized adv
 
 Each of the following topics links to a detailed section within the document:
 
-1. [**Ads as Activities**](#ads-as-activities): Advertisements are treated as specialized ActivityPub activities, allowing for native distribution and interaction within the Fediverse.
+1. [**Ads as Activities**](./Decentralized_Advertising_Fediverse_ActivityPub.md#ads-as-activities): Advertisements are treated as specialized ActivityPub activities, allowing for native distribution and interaction within the Fediverse.
 
-2. [**User Preferences**](#user-preferences): Users have granular control over the type of ads they see, with options to fine-tune or opt-out.
+2. [**User Preferences**](./Decentralized_Advertising_Fediverse_ActivityPub.md#user-preferences): Users have granular control over the type of ads they see, with options to fine-tune or opt-out.
 
-3. [**Server-Side Logic**](#server-side-logic): Handles ad validation, user matching, ad display, metrics collection, and revenue distribution.
+3. [**Server-Side Logic**](./Decentralized_Advertising_Fediverse_ActivityPub.md#server-side-logic): Handles ad validation, user matching, ad display, metrics collection, and revenue distribution.
 
-4. [**Client Extensions**](#client-extensions): Modifications to ActivityPub clients for a seamless user experience, including ad preferences UI, ad display, ad interactions, and opt-out option.
+4. [**Client Extensions**](./Decentralized_Advertising_Fediverse_ActivityPub.md#client-extensions): Modifications to ActivityPub clients for a seamless user experience, including ad preferences UI, ad display, ad interactions, and opt-out option.
 
-5. [**Advertiser Interaction**](#advertiser-interaction): Advertisers can create, target, and track ads within the ActivityPub framework.
+5. [**Advertiser Interaction**](./Decentralized_Advertising_Fediverse_ActivityPub.md#advertiser-interaction): Advertisers can create, target, and track ads within the ActivityPub framework.
 
-6. [**Metrics & Reporting**](#metrics-reporting): Collection of key metrics such as impressions, clicks, and other interactions for insights and optimization.
+6. [**Metrics & Reporting**](./Decentralized_Advertising_Fediverse_ActivityPub.md#metrics-reporting): Collection of key metrics such as impressions, clicks, and other interactions for insights and optimization.
 
-7. [**Opt-Out & Consent**](#opt-out-consent): Mechanisms for user opt-out and consent management.
+7. [**Opt-Out & Consent**](./Decentralized_Advertising_Fediverse_ActivityPub.md#opt-out-consent): Mechanisms for user opt-out and consent management.
 
-8. [**Monetization**](#monetization): Revenue generation and distribution models, including Pay-Per-Click (PPC), Pay-Per-Impression (PPI), and Pay-Per-Interaction (PPIx).
+8. [**Monetization**](./Decentralized_Advertising_Fediverse_ActivityPub.md#monetization): Revenue generation and distribution models, including Pay-Per-Click (PPC), Pay-Per-Impression (PPI), and Pay-Per-Interaction (PPIx).
 
-The document also outlines a strategy for [pilot testing and feedback collection](#pilot-testing-feedback) before wider release.
+The document also outlines a strategy for [pilot testing and feedback collection](./Decentralized_Advertising_Fediverse_ActivityPub.md#pilot-testing-feedback) before wider release.
 
 ## Conclusion
 
-The proposed system addresses the core challenge of revenue generation for the Fediverse, ensuring its longevity while respecting user privacy and providing value to advertisers. For more details, please refer to the [full document](#full-document).
+The proposed system addresses the core challenge of revenue generation for the Fediverse, ensuring its longevity while respecting user privacy and providing value to advertisers. For more details, please refer to the [full document](./Decentralized_Advertising_Fediverse_ActivityPub.md).
