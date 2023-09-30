@@ -308,9 +308,13 @@ This section explains how advertisers set budgets for their ad campaigns, how th
 
 1. **Milestone-Based Updates**: Budget updates are sent when 50%, 75%, and 100% of the local budget is consumed. When a milestone is reached, the server sends an `ad:BudgetUpdate` activity to a commonly subscribed "Budget Topic". Servers adjust their local tally based on updates received from the "Budget Topic".
 
-2. **Cap Monitoring and Stopping**: Each server stops displaying the ad if the local tally reaches or exceeds the initial budget. A brief "cooling-off" period is allowed to account for any in-flight activities.
+2. **Dynamic Throttling**: As the budget nears exhaustion, servers could progressively slow down the rate at which they serve the ad. This would give more time for `ad:BudgetUpdate` activities to propagate and reduce the risk of overspending.
 
-3. **Final Reconciliation**: A final `ad:BudgetSummary` activity is sent to the "Budget Topic" for reconciliation. Advertisers are notified when significant milestones are reached or the budget is consumed.
+3. **Heartbeats**: Servers send `ad:BudgetUpdate` activities at regular intervals, even if no new spending has occurred, to ensure all servers have a consistent view of the budget.
+
+4. **Cap Monitoring and Stopping**: Each server stops displaying the ad if the local tally reaches or exceeds the initial budget.
+
+5. **Final Reconciliation**: A final `ad:BudgetSummary` activity is sent to the "Budget Topic" for reconciliation.
 
 #### Budget Lock-In, Revenue Sharing and Settlement
 
