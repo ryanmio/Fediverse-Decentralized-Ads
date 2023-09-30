@@ -86,21 +86,21 @@ Ads are defined as a custom ActivityPub `type` called `Ad`. Here is an example d
 
 
 #### Server-Side Handling
-##### Validation: When an ad activity is received, the server should validate the JSON-LD against the predefined schema for ad:Ad. Any non-compliant activities should be rejected.
+**Validation:** When an ad activity is received, the server should validate the JSON-LD against the predefined schema for ad:Ad. Any non-compliant activities should be rejected.
 
-##### Routing: The server will route the ad activity based on the targetDemographics field, matching it against the AdPreferences of users on the instance.
+**Routing:** The server will route the ad activity based on the targetDemographics field, matching it against the AdPreferences of users on the instance.
 
 #### Client-Side Handling
-#####Display: Clients will recognize the ad:Ad type and can render it in a designated ad space within the UI.
+**Display:** Clients will recognize the ad:Ad type and can render it in a designated ad space within the UI.
 
-##### Interaction: Users can interact with the ad through standard ActivityPub actions like Like, Dislike, or custom-defined ad interaction verbs.
+**Interaction:** Users can interact with the ad through standard ActivityPub actions like Like, Dislike, or custom-defined ad interaction verbs.
 
 #### Advantages
-##### Standardization: By using ActivityPub, we ensure that ads can be federated across any ActivityPub-compliant server without needing a new protocol or standard.
+**Standardization:** By using ActivityPub, we ensure that ads can be federated across any ActivityPub-compliant server without needing a new protocol or standard.
 
-##### Extensibility: The JSON-LD format is extensible, allowing for future additions to the ad format without breaking compatibility.
+**Extensibility:** The JSON-LD format is extensible, allowing for future additions to the ad format without breaking compatibility.
 
-##### User Control: Representing ads as activities allows for user interaction and feedback, which can be used to refine ad targeting and performance metrics.
+**User Control:** Representing ads as activities allows for user interaction and feedback, which can be used to refine ad targeting and performance metrics.
 
 ### User Preferences
 
@@ -143,21 +143,21 @@ Here's an example of a user preference modeled as a custom ActivityPub activity:
 
 #### Server-Side Handling
 
-##### Preference Matching: When an ad is received, the server uses these preferences to decide which users are eligible to see the ad.
+**Preference Matching:** When an ad is received, the server uses these preferences to decide which users are eligible to see the ad.
 
-##### Updating Preferences: Servers should listen for updates to this AdPreferences activity to refresh user preferences in real-time.
+**Updating Preferences:** Servers should listen for updates to this AdPreferences activity to refresh user preferences in real-time.
 
 #### Client-Side Handling
-##### UI for Preferences: Clients should provide an intuitive UI where users can set and update their ad preferences, divided into the sections explained above.
+**UI for Preferences:** Clients should provide an intuitive UI where users can set and update their ad preferences, divided into the sections explained above.
 
-##### Local Storage: These preferences can be stored locally on the client and synced with the server.
+**Local Storage:** These preferences can be stored locally on the client and synced with the server.
 
 #### Advantages
-##### User Autonomy: Users can fine-tune their ad experience, enabling or disabling categories as they see fit.
+**User Autonomy:** Users can fine-tune their ad experience, enabling or disabling categories as they see fit.
 
-##### Privacy: All preferences are stored within the ActivityPub ecosystem, ensuring data isn't shared with external parties.
+**Privacy:** All preferences are stored within the ActivityPub ecosystem, ensuring data isn't shared with external parties.
 
-#####Dynamic Updating: As users change their preferences, these updates are immediately reflected in the ads they see, thanks to real-time syncing between clients and servers.
+**Dynamic Updating:** As users change their preferences, these updates are immediately reflected in the ads they see, thanks to real-time syncing between clients and servers.
 
 ### Server-Side Logic
 
@@ -236,11 +236,11 @@ By implementing these features, ActivityPub clients can provide a user-friendly,
 By making advertisers ActivityPub actors, they can utilize the existing ActivityPub infrastructure for creating, distributing, and tracking ads. This section outlines how advertisers can create, target, and track ads within the ActivityPub framework.
 
 #### Ad Creation and Targeting
-##### Ad Creation Methods: Advertisers have the flexibility to create ads using various methods. They can utilize a client that supports ad creation or employ a standalone tool that sends ActivityPub activities. Given the decentralized nature of the system, anyone can develop a tool for this purpose.
+**Ad Creation Methods:** Advertisers have the flexibility to create ads using various methods. They can utilize a client that supports ad creation or employ a standalone tool that sends ActivityPub activities. Given the decentralized nature of the system, anyone can develop a tool for this purpose.
 
-##### Ad Targeting: Advertisers can specify targeting criteria that match against user AdPreferences.
+**Ad Targeting:** Advertisers can specify targeting criteria that match against user AdPreferences.
 
-##### Publishing & Distribution: Once an ad is created, it's published as an ActivityPub activity and federated to appropriate servers based on the targeting criteria.
+**Publishing & Distribution:** Once an ad is created, it's published as an ActivityPub activity and federated to appropriate servers based on the targeting criteria.
 
 ### Metrics & Reporting
 
