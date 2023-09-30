@@ -1,6 +1,6 @@
 # Decentralized Advertising in the Fediverse Using ActivityPub
 
-This README provides an overview of a decentralized advertising model for the Fediverse using the ActivityPub protocol. The system aims to provide a viable revenue stream for server operators and content creators, while respecting user privacy and control.
+This README provides an overview of a decentralized advertising framework for the Fediverse using the ActivityPub protocol. The framework aims to provide a viable revenue stream for server operators and content creators, while respecting user privacy and control.
 
 ## Key Features
 
@@ -24,4 +24,4 @@ Each of the following topics links to a detailed section within the document:
 
 ## Full Document
 
-The proposed model addresses the core challenge of revenue generation for the Fediverse, ensuring its longevity while respecting user privacy and providing value to advertisers. For more details, please refer to the [full document](./docs/Decentralized_Advertising_Fediverse_ActivityPub.md).
+The proposed framework addresses the core challenge of revenue generation for the Fediverse, ensuring its longevity while respecting user privacy and providing value to advertisers. For more details, please refer to the [full document](./docs/Decentralized_Advertising_Fediverse_ActivityPub.md).
