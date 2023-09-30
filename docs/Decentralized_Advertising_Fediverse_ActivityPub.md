@@ -17,7 +17,11 @@
 
 ## Introduction
 
-The Fediverse, a decentralized network of social media platforms, offers an alternative to traditional, centralized platforms. However, its growth and sustainability face significant challenges due to a lack of viable monetization options. Server maintenance and moderation require financial resources, and relying solely on volunteers and donations is not scalable. This document proposes a decentralized advertising system built atop the ActivityPub protocol as a solution to these challenges. The system aims to provide relevant, user-controlled advertising that respects privacy, offers robust monetization, and seamlessly integrates with the existing ActivityPub ecosystem.
+The Fediverse, a decentralized network of social media platforms, offers an alternative to traditional, centralized platforms. However, its growth and sustainability face significant challenges due to a lack of viable monetization options. 
+
+Currently, the Fediverse relies heavily on volunteers for server maintenance and moderation, and on donations for financial resources. This model, while embodying the community spirit of the Fediverse, is not scalable. As the network expands, the demand for resources also increases, straining the current model. Furthermore, content creators lack a reliable way to monetize their work, limiting the diversity and quality of content.
+
+This document proposes a solution to these challenges: a decentralized advertising framework built on the ActivityPub protocol. This framework aims to provide relevant, user-controlled advertising that respects privacy, offers robust monetization, and integrates seamlessly with the existing ActivityPub ecosystem.
 
 ## Goals
 
@@ -25,7 +29,7 @@ The Fediverse, a decentralized network of social media platforms, offers an alte
   
 2. **User Autonomy**: Give users control over their ad experience, with options to fine-tune or opt-out.
 
-3. **Privacy**: Design the system with privacy as a cornerstone, aligning with the values of the Fediverse.
+3. **Privacy**: Design the framework with privacy as a cornerstone, aligning with the values of the Fediverse.
 
 4. **Seamless Integration**: Leverage existing ActivityPub protocols for easy adoption and implementation.
 
@@ -33,16 +37,16 @@ The Fediverse, a decentralized network of social media platforms, offers an alte
 
 ## ActivityPub Integration
 
-This section discusses how the proposed advertising system integrates with ActivityPub.
+This section discusses how the framework integrates with ActivityPub.
 
 ### Ads as Activities
 
-Advertisements are treated as specialized ActivityPub activities, encoded in JSON-LD. This approach aims to unify the advertising model with the existing ActivityPub standards, making it easier for developers to implement the system.
+Advertisements are treated as specialized ActivityPub activities, encoded in JSON-LD. This approach aims to unify the advertising model with the existing ActivityPub standards, making it easier for developers to implement the framework.
 
 Key Advantages:
 
 - Native Distribution: Ads can be seamlessly federated across ActivityPub-compliant servers, reaching a wider audience without additional protocols.
-- User Interaction: The inherent interactivity of activities enables users to engage with ads through actions like 'Like,' 'Share,' or custom interactions defined for the advertising system.
+- User Interaction: The inherent interactivity of activities enables users to engage with ads through actions like 'Like,' 'Share,' or custom interactions defined for the advertising framework.
 - Structured Metadata: Ads can carry additional metadata such as target demographics, monetization pointers, and more, all within the ActivityPub JSON-LD context.
 
 Data Model: Ads are defined as a custom ActivityPub type called Ad. Here is an example data model for an ad:
@@ -197,7 +201,7 @@ Server-side logic handles ad validation, user matching, ad display, metrics coll
 
 ### Client Extensions
 
-Modifications to ActivityPub clients are essential for a seamless user experience in this ad system. This section outlines the key features and technical details for implementing client-side support for decentralized advertising.
+Modifications to ActivityPub clients are essential for a seamless user experience in this ad framework. This section outlines the key features and technical details for implementing client-side support for decentralized advertising.
 
 #### Core Features
 
@@ -282,27 +286,27 @@ This section describes the mechanisms for user opt-out and how consent is manage
 
 3. **ActivityPub Flags**: Use ActivityPub activities or flags in user profiles to indicate their opt-out or consent status.
 
-By implementing these features, the system ensures users have complete control over their data and ad experience.
+By implementing these features, the framework ensures users have complete control over their data and ad experience.
 
 ### Budget Management and Billing
 
-This section outlines the process of budget management and billing in the decentralized ad network. It covers how advertisers set budgets, how these budgets are distributed and tracked, and how billing is handled.
+This section explains how advertisers set budgets for their ad campaigns, how these budgets are distributed and tracked across the network, and how billing is handled.
 
 #### Budget Setup and Ad Creation
 
-1. **Initial Budget and Ad Creation**: The advertiser begins by selecting a client that supports ad creation. Within this client, they define their ad and set an initial budget for it. This budget represents the total amount the advertiser is willing to spend on the ad campaign.
+1. **Initial Budget and Ad Creation**: The advertiser selects a client that supports ad creation. They define their ad and set an initial budget, which is the total amount they are willing to spend on the ad campaign.
 
-2. **Payment to Client**: The advertiser makes a payment to the client equal to the initial budget. This payment is held by the client and is used to fund the distribution and display of the ad across the network.
+2. **Payment to Client**: The advertiser pays the client an amount equal to the initial budget. This payment is used to fund the distribution and display of the ad across the network.
 
 #### Ad Distribution and Budget Tracking
 
-1. **Federation of Ad Activity**: Once the payment is confirmed, the client creates an `ad:Ad` activity that includes the ad content and the budget. This activity is then federated to all participating servers in the network.
+1. **Federation of Ad Activity**: After the payment is confirmed, the client creates an `ad:Ad` activity that includes the ad content and the budget. This activity is then distributed to all participating servers in the network.
 
-2. **Budget Distribution and Local Tracking**: Each participating server receives the `ad:Ad` activity and records the budget associated with the ad. This budget is used to track the consumption of the ad on that server, based on user interactions. Each server maintains a local tally of the budget consumed based on user interactions. This includes actions such as ad views, clicks, and other engagements. The tally is updated in real-time as users interact with the ads. This local tracking allows each server to independently monitor its share of the budget, ensuring accurate and decentralized budget management.
+2. **Budget Distribution and Local Tracking**: Each server that receives the `ad:Ad` activity records the budget associated with the ad. This budget is used to track the consumption of the ad on that server, based on user interactions such as ad views, clicks, and other engagements. Each server maintains a local tally of the budget consumed, which is updated in real-time as users interact with the ads.
 
 #### Budget Updates and Monitoring
 
-1. **Milestone-Based Updates**: Budget updates are sent at predefined milestones like 50%, 75%, and 100% of local budget consumption. Upon reaching a milestone, the server sends an `ad:BudgetUpdate` activity to a commonly subscribed "Budget Topic". Servers adjust their local tally based on updates received from the "Budget Topic".
+1. **Milestone-Based Updates**: Budget updates are sent when 50%, 75%, and 100% of the local budget is consumed. When a milestone is reached, the server sends an `ad:BudgetUpdate` activity to a commonly subscribed "Budget Topic". Servers adjust their local tally based on updates received from the "Budget Topic".
 
 2. **Cap Monitoring and Stopping**: Each server stops displaying the ad if the local tally reaches or exceeds the initial budget. A brief "cooling-off" period is allowed to account for any in-flight activities.
 
@@ -310,15 +314,15 @@ This section outlines the process of budget management and billing in the decent
 
 #### Budget Lock-In, Revenue Sharing and Settlement
 
-1. **Campaign Creation and Budget Reservation**: The advertiser creates a campaign on the origin server and allocates a specific budget to it. This budget is reserved from the advertiser's pre-loaded account balance, ensuring it's not utilized for other campaigns.
+1. **Campaign Creation and Budget Reservation**: The advertiser creates a campaign on the origin server and allocates a specific budget to it. This budget is reserved from the advertiser's pre-loaded account balance.
 
-2. **Ad Distribution**: The ad, along with the budget information, is federated to participating servers.
+2. **Ad Distribution**: The ad, along with the budget information, is distributed to participating servers.
 
-3. **Revenue Sharing Agreement and Budget Utilization**: A predefined revenue-sharing agreement exists between the origin server and participating servers, based on metrics like clicks, views, etc. Participating servers tally their share of the budget based on user interactions and report back to the origin server at predefined intervals.
+3. **Revenue Sharing Agreement and Budget Utilization**: A predefined revenue-sharing agreement exists between the origin server and participating servers. Participating servers tally their share of the budget based on user interactions and report back to the origin server at predefined intervals.
 
 4. **Interim and Final Settlements**: At these intervals, the origin server transfers the earned share to each participating server, deducting it from the locked-in budget. Once the campaign ends or the budget is consumed, final settlements are made. Any leftover budget is unlocked and made available for future campaigns or withdrawal.
 
-This centralized approach simplifies billing and settlement while ensuring that campaigns are pre-funded, reducing financial risk for all servers involved.
+This approach simplifies billing and settlement while ensuring that campaigns are pre-funded, reducing financial risk for all servers involved.
 
 ### Monetization
 
@@ -350,7 +354,7 @@ Monetization is a key motivator for both advertisers and content creators. This 
 
 4. **ActivityPub Revenue Activities**: Specialized ActivityPub activities can be used to record and notify of revenue events.
 
-By clearly defining monetization models and revenue distribution mechanisms, the ad system aims to be a profitable venture for all parties involved, while maintaining user trust and engagement.
+By clearly defining monetization models and revenue distribution mechanisms, the ad framework aims to be a profitable venture for all parties involved, while maintaining user trust and engagement.
 
 ## Pilot Testing & Feedback
 
@@ -363,7 +367,7 @@ By clearly defining monetization models and revenue distribution mechanisms, the
 
 ## Conclusion
 
-This document outlines a robust strategy for implementing a decentralized advertising system in the Fediverse using ActivityPub. The proposed system addresses the core challenge of revenue generation, which has been a significant hurdle for the sustainability of the Fediverse. By introducing a revenue model that respects user privacy and provides value to advertisers, we can ensure the longevity of the Fediverse.
+This document outlines a robust strategy for implementing a decentralized advertising framework in the Fediverse using ActivityPub. The proposed framework addresses the core challenge of revenue generation, which has been a significant hurdle for the sustainability of the Fediverse. By introducing a revenue model that respects user privacy and provides value to advertisers, we can ensure the longevity of the Fediverse.
 
 
 
