@@ -10,6 +10,7 @@
    4. [Client Extensions](#client-extensions)
    5. [Advertiser Interaction](#advertiser-interaction)
    6. [Metrics & Reporting](#metrics--reporting)
+   7. [Budget Management and Billing](#budget-management-and-billing)
    7. [Opt-Out & Consent](#opt-out--consent)
    8. [Monetization](#monetization)
 4. [Pilot Testing & Feedback](#pilot-testing--feedback)
@@ -32,23 +33,19 @@ The Fediverse, a decentralized network of social media platforms, offers an alte
 
 ## ActivityPub Integration
 
+This section discusses how the proposed advertising system integrates with ActivityPub.
+
 ### Ads as Activities
 
-In this architecture, advertisements are treated as specialized ActivityPub activities, encoded in JSON-LD. This approach aims to unify the advertising model with the existing ActivityPub standards, making it easier for developers to implement the system.
+Advertisements are treated as specialized ActivityPub activities, encoded in JSON-LD. This approach aims to unify the advertising model with the existing ActivityPub standards, making it easier for developers to implement the system.
 
-Ads in this system are represented as specialized ActivityPub activities, allowing for native distribution and interaction within the Fediverse. By using activities, ads gain several advantages:
+Key Advantages:
 
-1. **Native Distribution**: Ads can be seamlessly federated across ActivityPub-compliant servers, reaching a wider audience without additional protocols.
-  
-2. **User Interaction**: The inherent interactivity of activities enables users to engage with ads through actions like 'Like,' 'Share,' or custom interactions defined for the advertising system.
+- Native Distribution: Ads can be seamlessly federated across ActivityPub-compliant servers, reaching a wider audience without additional protocols.
+- User Interaction: The inherent interactivity of activities enables users to engage with ads through actions like 'Like,' 'Share,' or custom interactions defined for the advertising system.
+- Structured Metadata: Ads can carry additional metadata such as target demographics, monetization pointers, and more, all within the ActivityPub JSON-LD context.
 
-3. **Structured Metadata**: Ads can carry additional metadata such as target demographics, monetization pointers, and more, all within the ActivityPub JSON-LD context.
-
-This structure makes it easier for both servers and clients to handle ads in a standardized way, while providing advertisers with the ability to target their messages effectively.
-
-#### Data Model
-
-Ads are defined as a custom ActivityPub `type` called `Ad`. Here is an example data model for an ad:
+Data Model: Ads are defined as a custom ActivityPub type called Ad. Here is an example data model for an ad:
 
 ```json
 {
@@ -104,6 +101,8 @@ Ads are defined as a custom ActivityPub `type` called `Ad`. Here is an example d
 
 ### User Preferences
 
+This section discusses how user preferences are handled, including initial setup, customization, and dynamic updates.
+
 User preferences for advertisements are also treated as specialized ActivityPub activities or as custom fields in a user's ActivityPub profile. This ensures that users have granular control over the type of ads they see, while also keeping their data within the ActivityPub ecosystem.
 
 #### Data Model
@@ -152,12 +151,19 @@ Here's an example of a user preference modeled as a custom ActivityPub activity:
 
 **Local Storage:** These preferences can be stored locally on the client and synced with the server.
 
-#### Advantages
-**User Autonomy:** Users can fine-tune their ad experience, enabling or disabling categories as they see fit.
+#### Initial Setup and Customization
 
-**Privacy:** All preferences are stored within the ActivityPub ecosystem, ensuring data isn't shared with external parties.
+1. **Initial Prompt**: During first login or account creation, offer users an option to customize ad preferences. Make this step skippable to avoid intrusiveness.
+  
+2. **Categories & Keywords**: Provide a list of standardized categories and keywords for users to select from. These could be sourced from the server or agreed upon across the Fediverse.
 
-**Dynamic Updating:** As users change their preferences, these updates are immediately reflected in the ads they see, thanks to real-time syncing between clients and servers.
+#### Dynamic Updates and User Experience
+
+1. **Dynamic Prompts**: Utilize non-intrusive, contextual prompts to encourage users to update their preferences based on their activities, such as liking posts related to "technology."
+
+2. **Privacy Measures**: Store preferences locally or encrypt them before sending to the server. Be transparent about data usage.
+
+3. **UI Integration**: Seamlessly integrate the ad preferences UI into the existing client settings or profile customization sections.
 
 ### Server-Side Logic
 
@@ -188,20 +194,6 @@ Server-side logic handles ad validation, user matching, ad display, metrics coll
 5. **Metrics API**: Expose an API endpoint for advertisers to fetch metrics or send them as ActivityPub activities.
 
 6. **Payment Logic**: Implement server-side logic for handling payments and revenue distribution, which could be based on standard payment pointers or integrated payment APIs.
-
-#### Initial Setup and Customization
-
-1. **Initial Prompt**: During first login or account creation, offer users an option to customize ad preferences. Make this step skippable to avoid intrusiveness.
-  
-2. **Categories & Keywords**: Provide a list of standardized categories and keywords for users to select from. These could be sourced from the server or agreed upon across the Fediverse.
-
-#### Dynamic Updates and User Experience
-
-1. **Dynamic Prompts**: Utilize non-intrusive, contextual prompts to encourage users to update their preferences based on their activities, such as liking posts related to "technology."
-
-2. **Privacy Measures**: Store preferences locally or encrypt them before sending to the server. Be transparent about data usage.
-
-3. **UI Integration**: Seamlessly integrate the ad preferences UI into the existing client settings or profile customization sections.
 
 ### Client Extensions
 
@@ -246,59 +238,6 @@ By making advertisers ActivityPub actors, they can utilize the existing Activity
 
 Effective advertising is data-driven. This section details how metrics are collected, what metrics are important, and how they are presented to advertisers for insights and optimization.
 
-### Budget Management and Billing
-
-Managing budgets in a decentralized ad network poses unique challenges. To address this, a simplified Event-Based Update method with milestone-based triggers is proposed.
-
-#### Budget Setup and Distribution
-
-1. **Initial Budget**: The advertiser sets the budget in the `ad:Ad` activity, which is federated to all participating servers.
-  
-2. **Local Tracking**: Each server keeps a local tally of budget consumed based on user interactions.
-
-#### Milestone-Based Updates
-
-1. **Milestone Triggers**: Budget updates are sent at predefined milestones like 50%, 75%, and 100% of local budget consumption.
-
-2. **Event-Based Updates**: Upon reaching a milestone, the server sends an `ad:BudgetUpdate` activity to a commonly subscribed "Budget Topic".
-
-3. **Budget Adjustment**: Servers adjust their local tally based on updates received from the "Budget Topic".
-
-#### Cap Monitoring and Stopping
-
-1. **Cap Monitoring**: Each server stops displaying the ad if the local tally reaches or exceeds the initial budget.
-
-2. **Graceful Stop**: A brief "cooling-off" period is allowed to account for any in-flight activities.
-
-#### Final Reconciliation
-
-1. **End of Campaign**: A final `ad:BudgetSummary` activity is sent to the "Budget Topic" for reconciliation.
-
-2. **Notification**: Advertisers are notified when significant milestones are reached or the budget is consumed.
-
-### Budget Lock-In and Settlement
-
-#### Budget Lock-In at Origin Server
-
-1. **Campaign Creation**: The advertiser creates a campaign on the origin server and allocates a specific budget to it.
-  
-2. **Budget Reservation**: This budget is reserved from the advertiser's pre-loaded account balance, ensuring it's not utilized for other campaigns.
-
-3. **Ad Distribution**: The ad, along with the budget information, is federated to participating servers.
-
-#### Revenue Sharing and Settlement
-
-1. **Revenue Share Agreement**: A predefined revenue-sharing agreement exists between the origin server and participating servers, based on metrics like clicks, views, etc.
-
-2. **Budget Utilization**: Participating servers tally their share of the budget based on user interactions and report back to the origin server at predefined intervals.
-
-3. **Interim Settlements**: At these intervals, the origin server transfers the earned share to each participating server, deducting it from the locked-in budget.
-
-4. **End of Campaign**: Once the campaign ends or the budget is consumed, final settlements are made. Any leftover budget is unlocked and made available for future campaigns or withdrawal.
-
-This centralized approach simplifies billing and settlement while ensuring that campaigns are pre-funded, reducing financial risk for all servers involved.
-
-
 #### Key Metrics
 
 1. **Impressions**: The number of times an ad is viewed.
@@ -309,9 +248,11 @@ This centralized approach simplifies billing and settlement while ensuring that 
 
 4. **Opt-Outs**: The number of users who opted out of viewing the ad.
 
+5. **Comments:** Captured when a user performs a 'Create' activity with a 'Note' object in response to the ad.
+
 #### Implementation
 
-1. **Metrics Collection**: Servers collect these metrics as users interact with ads. Data is aggregated periodically to maintain user privacy.
+1. **Metrics Collection**: Servers collect these metrics as users interact with ads. Each interaction carries the 'actor' and 'object' fields, representing the user and the ad respectively. To ensure privacy, the 'actor' field is anonymized or omitted during metric collection.
   
 2. **Metrics API**: An API endpoint is exposed for advertisers to fetch these metrics. Alternatively, metrics can be sent back as specialized ActivityPub activities.
 
@@ -342,6 +283,42 @@ This section describes the mechanisms for user opt-out and how consent is manage
 3. **ActivityPub Flags**: Use ActivityPub activities or flags in user profiles to indicate their opt-out or consent status.
 
 By implementing these features, the system ensures users have complete control over their data and ad experience.
+
+### Budget Management and Billing
+
+This section outlines the process of budget management and billing in the decentralized ad network. It covers how advertisers set budgets, how these budgets are distributed and tracked, and how billing is handled.
+
+#### Budget Setup and Ad Creation
+
+1. **Initial Budget and Ad Creation**: The advertiser begins by selecting a client that supports ad creation. Within this client, they define their ad and set an initial budget for it. This budget represents the total amount the advertiser is willing to spend on the ad campaign.
+
+2. **Payment to Client**: The advertiser makes a payment to the client equal to the initial budget. This payment is held by the client and is used to fund the distribution and display of the ad across the network.
+
+#### Ad Distribution and Budget Tracking
+
+1. **Federation of Ad Activity**: Once the payment is confirmed, the client creates an `ad:Ad` activity that includes the ad content and the budget. This activity is then federated to all participating servers in the network.
+
+2. **Budget Distribution and Local Tracking**: Each participating server receives the `ad:Ad` activity and records the budget associated with the ad. This budget is used to track the consumption of the ad on that server, based on user interactions. Each server maintains a local tally of the budget consumed based on user interactions. This includes actions such as ad views, clicks, and other engagements. The tally is updated in real-time as users interact with the ads. This local tracking allows each server to independently monitor its share of the budget, ensuring accurate and decentralized budget management.
+
+#### Budget Updates and Monitoring
+
+1. **Milestone-Based Updates**: Budget updates are sent at predefined milestones like 50%, 75%, and 100% of local budget consumption. Upon reaching a milestone, the server sends an `ad:BudgetUpdate` activity to a commonly subscribed "Budget Topic". Servers adjust their local tally based on updates received from the "Budget Topic".
+
+2. **Cap Monitoring and Stopping**: Each server stops displaying the ad if the local tally reaches or exceeds the initial budget. A brief "cooling-off" period is allowed to account for any in-flight activities.
+
+3. **Final Reconciliation**: A final `ad:BudgetSummary` activity is sent to the "Budget Topic" for reconciliation. Advertisers are notified when significant milestones are reached or the budget is consumed.
+
+#### Budget Lock-In, Revenue Sharing and Settlement
+
+1. **Campaign Creation and Budget Reservation**: The advertiser creates a campaign on the origin server and allocates a specific budget to it. This budget is reserved from the advertiser's pre-loaded account balance, ensuring it's not utilized for other campaigns.
+
+2. **Ad Distribution**: The ad, along with the budget information, is federated to participating servers.
+
+3. **Revenue Sharing Agreement and Budget Utilization**: A predefined revenue-sharing agreement exists between the origin server and participating servers, based on metrics like clicks, views, etc. Participating servers tally their share of the budget based on user interactions and report back to the origin server at predefined intervals.
+
+4. **Interim and Final Settlements**: At these intervals, the origin server transfers the earned share to each participating server, deducting it from the locked-in budget. Once the campaign ends or the budget is consumed, final settlements are made. Any leftover budget is unlocked and made available for future campaigns or withdrawal.
+
+This centralized approach simplifies billing and settlement while ensuring that campaigns are pre-funded, reducing financial risk for all servers involved.
 
 ### Monetization
 
