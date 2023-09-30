@@ -61,8 +61,8 @@ Ads are defined as a custom ActivityPub `type` called `Ad`. Here is an example d
   "id": "unique_ad_id",
   "type": "ad:Ad",
   "actor": "advertiser_account_uri",
-  "content": "Discover our new eco-friendly smartwatch. Track your fitness goals while caring for the planet.",
-  "targetDemographics": ["18-35", "Tech enthusiasts", "Environmentally conscious"],
+  "content": "Discover our new eco-friendly smartwatch.",
+  "targetDemographics": ["18-35", "Tech enthusiasts"],
   "budget": 1000,
   "monetization": {
     "platform": "platform_payment_pointer",
@@ -71,62 +71,18 @@ Ads are defined as a custom ActivityPub `type` called `Ad`. Here is an example d
 }
 ```
 
-```json
-{
-  "@context": [
-    "https://www.w3.org/ns/activitystreams",
-    {
-      "ad": "https://example.com/schema/Ad"
-    }
-  ],
-  // The context defines the interpretation of the activity. It includes the standard ActivityPub context and a custom context for the ad.
+#### Fields Explained
 
-  "id": "unique_ad_id",
-  // A unique identifier for the ad. It should be a unique string that can be used to track and identify the ad.
-
-  "type": "ad:Ad",
-  // The type of the activity. In this case, it's `ad:Ad`, indicating that this activity is an ad.
-
-  "actor": "advertiser_account_uri",
-  // The URI of the advertiser's account. It allows for accountability and tracking of who created the ad.
-
-  "content": "String containing the ad content",
-  // The content of the ad. It should be a string containing the ad message.
-
-  "targetDemographics": ["Array", "of", "demographic", "tags"],
-  // An array of demographic tags. These tags are used to target the ad to specific demographics.
-
-  "budget": "Total budget for the ad campaign",
-  // The total budget for the ad campaign. It can be used for ad distribution logic.
-
-  "monetization": {
-    "platform": "platform_payment_pointer",
-    "creator": "creator_payment_pointer"
-  }
-  // An object that includes payment pointers for both the platform and the content creator. It's used for revenue sharing.
-}
-```
-1. @context: This is a standard field in ActivityPub activities. It defines the context in which the activity is interpreted. In this case, it includes the standard ActivityPub context and a custom context for the ad.
-   The custom context "ad": "https://example.com/schema/Ad" is a URL where the schema for the custom ad:Ad type is defined. This allows for extensibility and custom properties for ads.
-
-2. id: This is a unique identifier for the ad. It should be a unique string that can be used to track and identify the ad.
-
-3. type: This is the type of the activity. In this case, it's ad:Ad, indicating that this activity is an ad.
-
-4. actor: This is the URI of the advertiser's account. It allows for accountability and tracking of who created the ad.
-   "actor": "advertiser_account_uri",
-
-5. content: This is the content of the ad. It should be a string containing the ad message.
-
-6. targetDemographics: This is an array of demographic tags. These tags are used to target the ad to specific demographics.
-
-7. budget: This is the total budget for the ad campaign. It can be used for ad distribution logic.
-
-8. monetization: This is an object that includes payment pointers for both the platform and the content creator. It's used for revenue sharing.
-   "monetization": {
-     "platform": "platform_payment_pointer",
-     "creator": "creator_payment_pointer"
-   }
+- `@context`: The context defines the interpretation of the activity. Includes both the standard ActivityPub context and a custom context for the ad.
+- `id`: A unique identifier for the ad, used for tracking.
+- `type`: Specifies the activity as an ad, indicated by `ad:Ad`.
+- `actor`: URI of the advertiser's account for accountability.
+- `content`: A string containing the ad message.
+- `targetDemographics`: An array of tags to target specific demographics.
+- `budget`: The total budget for the ad campaign.
+- `monetization`: 
+  - `platform`: Payment pointer for the platform.
+  - `creator`: Payment pointer for the content creator. Used for revenue sharing.
 
 
 #### Server-Side Handling
@@ -171,41 +127,20 @@ Here's an example of a user preference modeled as a custom ActivityPub activity:
 }
 ```
 
-```json
-{
-  "@context": "https://www.w3.org/ns/activitystreams",
-  // The context defines the interpretation of the activity. It includes the standard ActivityPub context.
+##### Fields Explained
 
-  "type": "AdPreferences",
-  // The type of the activity. In this case, it's `AdPreferences`, indicating that this activity is for storing user's ad preferences.
+- `@context`: The context defines the interpretation of the activity. It includes the standard ActivityPub context.
+- `type`: The type of the activity. In this case, it's `AdPreferences`, indicating that this activity is for storing user's ad preferences.
+- `actor`: The URI of the user's account. It allows for accountability and tracking of who created the preferences.
+- `timestamp`: An ISO 8601 timestamp that represents when the `AdPreferences` activity was last updated.
+- `preferences`: 
+  - `frequency`: The preferred frequency of ads, represented as a string like "Low", "Medium", "High", or "None".
+  - `format`: An array of preferred ad formats, such as "Image", "Text", "Video", etc.
+  - `categories`: An array of preferred ad categories, such as "Tech", "Fashion", "Sports", etc.
+- `interests`: An array of interest tags used to match ads to the user's interests.
+- `keywords`: An array of keywords that represent the user's interests.
+- `exclusions`: An array of exclusion tags used to exclude certain categories of ads from being displayed to the user.
 
-  "actor": "user_account_uri",
-  // The URI of the user's account. It allows for accountability and tracking of who created the preferences.
-
-  "timestamp": "ISO_8601_timestamp",
-  // An ISO 8601 timestamp that represents when the `AdPreferences` activity was last updated.
-
-  "preferences": {
-    "frequency": "Preferred ad frequency",
-    // The preferred frequency of ads. It should be a string like "Low", "Medium", "High", or "None".
-
-    "format": ["Preferred", "ad", "formats"],
-    // An array of preferred ad formats. These could be strings like "Image", "Text", "Video", etc.
-
-    "categories": ["Preferred", "ad", "categories"]
-    // An array of preferred ad categories. These could be strings like "Tech", "Fashion", "Sports", etc.
-  },
-
-  "interests": ["Array", "of", "interest", "tags"],
-  // An array of interest tags. These tags are used to match ads to the user's interests.
-
-  "keywords": ["Array", "of", "keywords"],
-  // An array of keywords that represent the user's interests. These keywords can be used to match ads to the user's interests in addition to the `interests` field.
-
-  "exclusions": ["Array", "of", "exclusion", "tags"]
-  // An array of exclusion tags. These tags are used to exclude certain categories of ads from being displayed to the user.
-}
-```
 #### Server-Side Handling
 
 ##### Preference Matching: When an ad is received, the server uses these preferences to decide which users are eligible to see the ad.
@@ -254,6 +189,20 @@ Server-side logic handles ad validation, user matching, ad display, metrics coll
 
 6. **Payment Logic**: Implement server-side logic for handling payments and revenue distribution, which could be based on standard payment pointers or integrated payment APIs.
 
+#### Initial Setup and Customization
+
+1. **Initial Prompt**: During first login or account creation, offer users an option to customize ad preferences. Make this step skippable to avoid intrusiveness.
+  
+2. **Categories & Keywords**: Provide a list of standardized categories and keywords for users to select from. These could be sourced from the server or agreed upon across the Fediverse.
+
+#### Dynamic Updates and User Experience
+
+1. **Dynamic Prompts**: Utilize non-intrusive, contextual prompts to encourage users to update their preferences based on their activities, such as liking posts related to "technology."
+
+2. **Privacy Measures**: Store preferences locally or encrypt them before sending to the server. Be transparent about data usage.
+
+3. **UI Integration**: Seamlessly integrate the ad preferences UI into the existing client settings or profile customization sections.
+
 ### Client Extensions
 
 Modifications to ActivityPub clients are essential for a seamless user experience in this ad system. This section outlines the key features and technical details for implementing client-side support for decentralized advertising.
@@ -296,6 +245,59 @@ By making advertisers ActivityPub actors, they can utilize the existing Activity
 ### Metrics & Reporting
 
 Effective advertising is data-driven. This section details how metrics are collected, what metrics are important, and how they are presented to advertisers for insights and optimization.
+
+### Budget Management and Billing
+
+Managing budgets in a decentralized ad network poses unique challenges. To address this, a simplified Event-Based Update method with milestone-based triggers is proposed.
+
+#### Budget Setup and Distribution
+
+1. **Initial Budget**: The advertiser sets the budget in the `ad:Ad` activity, which is federated to all participating servers.
+  
+2. **Local Tracking**: Each server keeps a local tally of budget consumed based on user interactions.
+
+#### Milestone-Based Updates
+
+1. **Milestone Triggers**: Budget updates are sent at predefined milestones like 50%, 75%, and 100% of local budget consumption.
+
+2. **Event-Based Updates**: Upon reaching a milestone, the server sends an `ad:BudgetUpdate` activity to a commonly subscribed "Budget Topic".
+
+3. **Budget Adjustment**: Servers adjust their local tally based on updates received from the "Budget Topic".
+
+#### Cap Monitoring and Stopping
+
+1. **Cap Monitoring**: Each server stops displaying the ad if the local tally reaches or exceeds the initial budget.
+
+2. **Graceful Stop**: A brief "cooling-off" period is allowed to account for any in-flight activities.
+
+#### Final Reconciliation
+
+1. **End of Campaign**: A final `ad:BudgetSummary` activity is sent to the "Budget Topic" for reconciliation.
+
+2. **Notification**: Advertisers are notified when significant milestones are reached or the budget is consumed.
+
+### Budget Lock-In and Settlement
+
+#### Budget Lock-In at Origin Server
+
+1. **Campaign Creation**: The advertiser creates a campaign on the origin server and allocates a specific budget to it.
+  
+2. **Budget Reservation**: This budget is reserved from the advertiser's pre-loaded account balance, ensuring it's not utilized for other campaigns.
+
+3. **Ad Distribution**: The ad, along with the budget information, is federated to participating servers.
+
+#### Revenue Sharing and Settlement
+
+1. **Revenue Share Agreement**: A predefined revenue-sharing agreement exists between the origin server and participating servers, based on metrics like clicks, views, etc.
+
+2. **Budget Utilization**: Participating servers tally their share of the budget based on user interactions and report back to the origin server at predefined intervals.
+
+3. **Interim Settlements**: At these intervals, the origin server transfers the earned share to each participating server, deducting it from the locked-in budget.
+
+4. **End of Campaign**: Once the campaign ends or the budget is consumed, final settlements are made. Any leftover budget is unlocked and made available for future campaigns or withdrawal.
+
+This centralized approach simplifies billing and settlement while ensuring that campaigns are pre-funded, reducing financial risk for all servers involved.
+
 
 #### Key Metrics
 
