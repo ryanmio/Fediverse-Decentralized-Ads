@@ -16,11 +16,13 @@ Each of the following topics links to a detailed section within the document:
 
 5. [**Advertiser Interaction**](./docs/Decentralized_Advertising_Fediverse_ActivityPub.md#advertiser-interaction): Advertisers can create, target, and track ads within the ActivityPub framework.
 
-6. [**Metrics & Reporting**](./docs/Decentralized_Advertising_Fediverse_ActivityPub.md#metrics-reporting): Collection of key metrics such as impressions, clicks, and other interactions for insights and optimization.
+6. [**Budget Management and Billing**](./docs/Decentralized_Advertising_Fediverse_ActivityPub.md#budget-management-and-billing): Explains how advertisers set budgets for their ad campaigns, how these budgets are distributed and tracked across the network, and how billing is handled.
 
-7. [**Opt-Out & Consent**](./docs/Decentralized_Advertising_Fediverse_ActivityPub.md#opt-out-consent): Mechanisms for user opt-out and consent management.
+7. [**Metrics & Reporting**](./docs/Decentralized_Advertising_Fediverse_ActivityPub.md#metrics-reporting): Collection of key metrics such as impressions, clicks, and other interactions for insights and optimization.
 
-8. [**Monetization**](./docs/Decentralized_Advertising_Fediverse_ActivityPub.md#monetization): Revenue generation and distribution models, including Pay-Per-Click (PPC), Pay-Per-Impression (PPI), and Pay-Per-Interaction (PPIx).
+8. [**Opt-Out & Consent**](./docs/Decentralized_Advertising_Fediverse_ActivityPub.md#opt-out-consent): Mechanisms for user opt-out and consent management.
+
+9. [**Monetization**](./docs/Decentralized_Advertising_Fediverse_ActivityPub.md#monetization): Revenue generation and distribution models, including Pay-Per-Click (PPC), Pay-Per-Impression (PPI), and Pay-Per-Interaction (PPIx).
 
 ## Full Document
 
