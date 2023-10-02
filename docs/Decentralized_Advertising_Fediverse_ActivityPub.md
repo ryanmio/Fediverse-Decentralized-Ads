@@ -10,10 +10,9 @@
    4. [Client Extensions](#client-extensions)
    5. [Advertiser Interaction](#advertiser-interaction)
    6. [Metrics & Reporting](#metrics--reporting)
-   7. [Budget Management and Billing](#budget-management-and-billing)
-   7. [Opt-Out & Consent](#opt-out--consent)
-   8. [Monetization](#monetization)
-4. [Pilot Testing & Feedback](#pilot-testing--feedback)
+   7. [Opt-Out & Consent](#opt-out--consent)   
+   8. [Budget Management and Billing](#budget-management-and-billing)
+   9. [Monetization](#monetization)
 
 ## Introduction
 
@@ -296,7 +295,7 @@ This section explains how advertisers set budgets for their ad campaigns, how th
 
 1. **Initial Budget and Ad Creation**: The advertiser selects a client that supports ad creation. They define their ad and set an initial budget, which is the total amount they are willing to spend on the ad campaign.
 
-2. **Payment to Client**: The advertiser pays the client an amount equal to the initial budget. This payment is used to fund the distribution and display of the ad across the network.
+2. **Payment to Client**: The initial budget is paid to the origin server or specialized advertising client through a secure payment gateway. This payment is used to fund the distribution and display of the ad across the network.
 
 #### Ad Distribution and Budget Tracking
 
@@ -304,42 +303,31 @@ This section explains how advertisers set budgets for their ad campaigns, how th
 
 2. **Budget Distribution and Local Tracking**: Each server that receives the `ad:Ad` activity records the budget associated with the ad. This budget is used to track the consumption of the ad on that server, based on user interactions such as ad views, clicks, and other engagements. Each server maintains a local tally of the budget consumed, which is updated in real-time as users interact with the ads.
 
-#### Budget Updates and Monitoring
+#### Impression Allocation & Top-Up
 
-1. **Milestone-Based Updates**: Budget updates are sent when 50%, 75%, and 100% of the local budget is consumed. When a milestone is reached, the server sends an `ad:BudgetUpdate` activity to a commonly subscribed "Budget Topic". Servers adjust their local tally based on updates received from the "Budget Topic".
+1. **Initial Allocation**: The origin server allocates initial blocks of impressions to participating servers via a `Create` + `AdCampaign` activity.
 
-2. **Dynamic Throttling**: As the budget nears exhaustion, servers could progressively slow down the rate at which they serve the ad. This would give more time for `ad:BudgetUpdate` activities to propagate and reduce the risk of overspending.
+2. **Top-Up Requests**: Participating servers request additional impressions via a `Request` activity when nearing their allocated limit. This request includes an impressions report providing interim ad reporting back to the origin server and advertiser.
 
-3. **Heartbeats**: Servers send `ad:BudgetUpdate` activities at regular intervals, even if no new spending has occurred, to ensure all servers have a consistent view of the budget.
+3. **Top-Up Allocation**: The origin server grants additional impressions via an `Update` + `AdCampaign` activity.
 
-4. **Cap Monitoring and Stopping**: Each server stops displaying the ad if the local tally reaches or exceeds the initial budget.
+4. **Real-Time Tracking**: The origin server keeps a real-time tally of impressions allocated and used.
 
-5. **Final Reconciliation**: A final `ad:BudgetSummary` activity is sent to the "Budget Topic" for reconciliation.
+5. **Interim Settlement**: Optionally, at predefined intervals or milestones, the origin server settles any financial transactions, such as revenue sharing with participating servers.
 
-#### Budget Lock-In, Revenue Sharing and Settlement
+6. **Final Reconciliation**: At the end of the campaign, final ad:BudgetSummary activity is sent to the "Budget Topic" for reconciliation, and any unused budget is returned to the advertiser as credit. 
 
-1. **Campaign Creation and Budget Reservation**: The advertiser creates a campaign on the origin server and allocates a specific budget to it. This budget is reserved from the advertiser's pre-loaded account balance.
+7. **Payment Pointers**: Payments are made to the payment pointers provided by each participating server, ensuring secure and transparent transactions. Each participating server provides a payment pointer during the initial ad campaign setup.
 
-2. **Ad Distribution**: The ad, along with the budget information, is distributed to participating servers.
-
-3. **Revenue Sharing Agreement and Budget Utilization**: A predefined revenue-sharing agreement exists between the origin server and participating servers. Participating servers tally their share of the budget based on user interactions and report back to the origin server at predefined intervals.
-
-4. **Interim and Final Settlements**: At these intervals, the origin server transfers the earned share to each participating server, deducting it from the locked-in budget. Once the campaign ends or the budget is consumed, final settlements are made. Any leftover budget is unlocked and made available for future campaigns or withdrawal.
-
-This approach simplifies billing and settlement while ensuring that campaigns are pre-funded, reducing financial risk for all servers involved.
+8. **Confirmation**: A PaymentConfirmation ActivityPub activity is sent to confirm the successful transfer of funds.
 
 ### Monetization
 
-Monetization is a key motivator for both advertisers and content creators. This section outlines how revenue is generated, shared, and managed within the ActivityPub-based ad system.
+This section outlines how revenue is generated, shared, and managed within the ActivityPub-based ad framework.
 
-#### Revenue Models
+#### Revenue Model
 
-1. **Pay-Per-Click (PPC)**: Advertisers pay based on the number of clicks their ads receive.
-  
-2. **Pay-Per-Impression (PPI)**: Advertisers pay based on the number of times their ad is viewed.
-
-3. **Pay-Per-Interaction (PPIx)**: Advertisers pay based on custom interactions like 'Likes,' 'Shares,' etc.
-
+1. **Pay-Per-Thousand Impressions (CPM)**: Advertisers pay based on blocks of 1,000 impressions.
 #### Revenue Distribution
 
 1. **Platform Share**: A certain percentage of ad revenue goes to the hosting platform.
@@ -347,27 +335,6 @@ Monetization is a key motivator for both advertisers and content creators. This 
 2. **Creator Share**: Content creators can also receive a share of the revenue based on user interaction with ads on their content.
 
 3. **User Share**: Optionally, users can receive a small share of revenue for interacting with ads, incentivizing engagement.
-
-#### Implementation
-
-1. **Payment Logic**: Servers implement logic to handle revenue distribution, which could be tied to standard payment pointers or integrated payment APIs.
-  
-2. **Transparency**: A transparent breakdown of revenue shares should be available to all stakeholders.
-
-3. **Billing and Payouts**: Implement a system for billing advertisers and executing payouts to platforms and creators.
-
-4. **ActivityPub Revenue Activities**: Specialized ActivityPub activities can be used to record and notify of revenue events.
-
-By clearly defining monetization models and revenue distribution mechanisms, the ad framework aims to be a profitable venture for all parties involved, while maintaining user trust and engagement.
-
-## Pilot Testing & Feedback
-
-1. **Alpha Test**: Limited initial rollout to a small user and advertiser base.
-  
-2. **Feedback Mechanism**: Easy ways for testers to provide feedback.
-
-3. **Iterations**: Use feedback for iterative improvements before wider release.
-
 
 ## Conclusion
 
