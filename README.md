@@ -22,7 +22,7 @@ Each of the following topics links to a detailed section within the document:
 
 8. [**Budget Management and Billing**](./docs/Decentralized_Advertising_Fediverse_ActivityPub.md#budget-management-and-billing): Explains how advertisers set budgets for their ad campaigns, how these budgets are distributed and tracked across the network, and how billing is handled.
 
-9. [**Monetization**](./docs/Decentralized_Advertising_Fediverse_ActivityPub.md#monetization): Revenue generation and distribution models, including Pay-Per-Click (PPC), Pay-Per-Impression (PPI), and Pay-Per-Interaction (PPIx).
+9. [**Monetization**](./docs/Decentralized_Advertising_Fediverse_ActivityPub.md#monetization): Outlines how revenue is generated, shared, and managed within the ActivityPub-based ad framework.
 
 ## Full Document
 
