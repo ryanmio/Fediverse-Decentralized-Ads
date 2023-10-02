@@ -10,10 +10,9 @@
    4. [Client Extensions](#client-extensions)
    5. [Advertiser Interaction](#advertiser-interaction)
    6. [Metrics & Reporting](#metrics--reporting)
-   7. [Budget Management and Billing](#budget-management-and-billing)
-   7. [Opt-Out & Consent](#opt-out--consent)
-   8. [Monetization](#monetization)
-4. [Pilot Testing & Feedback](#pilot-testing--feedback)
+   7. [Opt-Out & Consent](#opt-out--consent)   
+   8. [Budget Management and Billing](#budget-management-and-billing)
+   9. [Monetization](#monetization)
 
 ## Introduction
 
