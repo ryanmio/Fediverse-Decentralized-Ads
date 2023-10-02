@@ -297,29 +297,31 @@ This section explains how advertisers set budgets for their ad campaigns, how th
 
 2. **Payment to Client**: The initial budget is paid to the origin server or specialized advertising client through a secure payment gateway. This payment is used to fund the distribution and display of the ad across the network.
 
-#### Ad Distribution and Budget Tracking
+#### Ad Distribution, Budget Allocation, and Impression Management
 
 1. **Federation of Ad Activity**: After the payment is confirmed, the client creates an `ad:Ad` activity that includes the ad content and the budget. This activity is then distributed to all participating servers in the network.
 
-2. **Budget Distribution and Local Tracking**: Each server that receives the `ad:Ad` activity records the budget associated with the ad. This budget is used to track the consumption of the ad on that server, based on user interactions such as ad views, clicks, and other engagements. Each server maintains a local tally of the budget consumed, which is updated in real-time as users interact with the ads.
+2. **Initial Allocation**: The origin server allocates initial blocks of impressions to participating servers via a `Create` + `AdCampaign` activity.
 
-#### Impression Allocation & Top-Up
+3. **Budget Distribution**: The initial budget is divided among the participating servers based on a predetermined allocation strategy. This could be based on factors such as the number of users, engagement levels, or other criteria defined by the advertiser.
 
-1. **Initial Allocation**: The origin server allocates initial blocks of impressions to participating servers via a `Create` + `AdCampaign` activity.
+4. **Local Tracking**: Each server that receives the `ad:Ad` activity maintains a local tally of the impressions consumed. This allows for real-time tracking and ensures that the budget is not exceeded.
 
-2. **Top-Up Requests**: Participating servers request additional impressions via a `Request` activity when nearing their allocated limit. This request includes an impressions report providing interim ad reporting back to the origin server and advertiser.
+5. **Top-Up Requests**: Participating servers request additional impressions via a `Request` activity when nearing their allocated limit. This request includes an impressions report providing interim ad reporting back to the origin server and advertiser.
 
-3. **Top-Up Allocation**: The origin server grants additional impressions via an `Update` + `AdCampaign` activity.
+6. **Top-Up Allocation**: The origin server grants additional impressions via an `Update` + `AdCampaign` activity.
 
-4. **Real-Time Tracking**: The origin server keeps a real-time tally of impressions allocated and used.
+7. **Real-Time Tracking**: The origin server keeps a real-time tally of impressions allocated and used.
 
-5. **Interim Settlement**: Optionally, at predefined intervals or milestones, the origin server settles any financial transactions, such as revenue sharing with participating servers.
+8. **Interim Settlement**: Optionally, at predefined intervals or milestones, the origin server settles any financial transactions, such as revenue sharing with participating servers.
 
-6. **Final Reconciliation**: At the end of the campaign, final ad:BudgetSummary activity is sent to the "Budget Topic" for reconciliation, and any unused budget is returned to the advertiser as credit. 
+9. **Ad Termination**: Once the total budget is exhausted, the ad campaign is terminated. Any remaining funds are returned to the advertiser.
 
-7. **Payment Pointers**: Payments are made to the payment pointers provided by each participating server, ensuring secure and transparent transactions. Each participating server provides a payment pointer during the initial ad campaign setup.
+10. **Final Reconciliation**: At the end of the campaign, final ad:BudgetSummary activity is sent to the "Budget Topic" for reconciliation, and any unused budget is returned to the advertiser as credit. 
 
-8. **Confirmation**: A PaymentConfirmation ActivityPub activity is sent to confirm the successful transfer of funds.
+11. **Payment Pointers**: Payments are made to the payment pointers provided by each participating server, ensuring secure and transparent transactions. Each participating server provides a payment pointer during the initial ad campaign setup.
+
+12. **Confirmation**: A PaymentConfirmation ActivityPub activity is sent to confirm the successful transfer of funds.
 
 ### Monetization
 
@@ -327,14 +329,21 @@ This section outlines how revenue is generated, shared, and managed within the A
 
 #### Revenue Model
 
-1. **Pay-Per-Thousand Impressions (CPM)**: Advertisers pay based on blocks of 1,000 impressions.
+1. **Pay-Per-Thousand Impressions (CPM)**: The primary revenue model is based on Cost Per Thousand Impressions (CPM). Advertisers pay for blocks of 1,000 impressions, which provides a predictable and scalable revenue stream. This model aligns with industry standards and is easily understood by advertisers.
+
+2. **Revenue Goals**: The goal of the revenue model is to create a sustainable and equitable distribution of income. This includes covering operational costs for server operators, providing income for content creators, and potentially rewarding users for their engagement.
+
 #### Revenue Distribution
 
-1. **Platform Share**: A certain percentage of ad revenue goes to the hosting platform.
-  
-2. **Creator Share**: Content creators can also receive a share of the revenue based on user interaction with ads on their content.
+1. **Platform Share**: A significant portion of the ad revenue is allocated to the hosting platform. This revenue helps cover the costs of server operation, maintenance, and development, ensuring the sustainability of the platform.
 
-3. **User Share**: Optionally, users can receive a small share of revenue for interacting with ads, incentivizing engagement.
+2. **Creator Share**: Content creators are also beneficiaries of the revenue model. A share of the revenue is distributed based on user interaction with ads on their content. This incentivizes high-quality content creation and fosters a vibrant and active community.
+
+3. **User Share**: In addition to platform and creator shares, users can optionally receive a small share of revenue for interacting with ads. This model not only incentivizes user engagement but also respects and rewards users' attention.
+
+4. **Transparency and Fairness**: The revenue distribution model is designed to be transparent and fair. Detailed reports on ad impressions and revenue distribution are made available to all stakeholders. This transparency builds trust and encourages participation in the ad network.
+
+5. **Adoption and Integration**: The proposed monetization model is designed to be easily adopted and integrated into existing ActivityPub platforms. It respects user privacy, provides value to advertisers, and ensures a fair distribution of revenue, making it an attractive option for the Fediverse.
 
 ## Conclusion
 
