@@ -347,7 +347,7 @@ This section outlines how revenue is generated, shared, and managed within the A
 
 ## Conclusion
 
-This document outlines a robust strategy for implementing a decentralized advertising framework in the Fediverse using ActivityPub. The proposed framework addresses the core challenge of revenue generation, which has been a significant hurdle for the sustainability of the Fediverse. By introducing a revenue model that respects user privacy and provides value to advertisers, we can ensure the longevity of the Fediverse.
+The proposed framework addresses the core challenge of revenue generation, which has been a significant hurdle for the sustainability of the Fediverse. By introducing a revenue model that respects user privacy and provides value to advertisers, we can ensure the longevity of the Fediverse.
 
 
 
