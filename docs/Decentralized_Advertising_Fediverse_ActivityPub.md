@@ -42,7 +42,9 @@ This section discusses how the framework integrates with ActivityPub.
 
 Advertisements are treated as specialized ActivityPub activities, encoded in JSON-LD. This approach aims to unify the advertising model with the existing ActivityPub standards, making it easier for developers to implement the framework.
 
-Key Advantages:
+To manage the increased load from federating ad activities, we propose using a separate federation queue for ad activities. This would prevent ad activities from slowing down federation of non-ad activities. We also suggest using a caching system to store frequently accessed ad activities, reducing the load on the federation system and improving response times.
+
+Key Points:
 
 - Native Distribution: Ads can be seamlessly federated across ActivityPub-compliant servers, reaching a wider audience without additional protocols.
 - User Interaction: The inherent interactivity of activities enables users to engage with ads through actions like 'Like,' 'Share,' or custom interactions defined for the advertising framework.
@@ -322,6 +324,22 @@ This section explains how advertisers set budgets for their ad campaigns, how th
 11. **Payment Pointers**: Payments are made to the payment pointers provided by each participating server, ensuring secure and transparent transactions. Each participating server provides a payment pointer during the initial ad campaign setup.
 
 12. **Confirmation**: A PaymentConfirmation ActivityPub activity is sent to confirm the successful transfer of funds.
+
+This activity provides a record of each payment and allows all stakeholders to track payments. Example below:
+
+```
+json
+{
+"@context": "https://www.w3.org/ns/activitystreams",
+"type": "Payment",
+"actor": "https://example.com/advertisers/advertiser1",
+"object": "https://example.com/ads/ad1",
+"target": "https://example.com/servers/server1",
+"amount": 1000,
+"currency": "USD",
+"timestamp": "2022-01-01T00:00:00Z"
+}
+```
 
 ### Monetization
 
