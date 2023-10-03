@@ -327,8 +327,7 @@ This section explains how advertisers set budgets for their ad campaigns, how th
 
 This activity provides a record of each payment and allows all stakeholders to track payments. Example below:
 
-```
-json
+```json
 {
 "@context": "https://www.w3.org/ns/activitystreams",
 "type": "Payment",
