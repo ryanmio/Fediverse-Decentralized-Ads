@@ -235,9 +235,9 @@ By making advertisers ActivityPub actors, they can utilize the existing Activity
 #### Ad Creation and Targeting
 **Ad Creation Methods:** Advertisers have the flexibility to create ads using various methods. They can utilize a client that supports ad creation or employ a standalone tool that sends ActivityPub activities. Given the decentralized nature of the system, anyone can develop a tool for this purpose.
 
-**Ad Targeting:** Advertisers can specify targeting criteria that match against user AdPreferences.
+**Ad Targeting:** Advertisers can specify targeting criteria that match against user AdPreferences. This includes demographic information, user interests, and other relevant criteria. The targeting criteria should be specified in the `targetDemographics` field of the ad activity.
 
-**Publishing & Distribution:** Once an ad is created, it's published as an ActivityPub activity and federated to appropriate servers based on the targeting criteria.
+**Publishing & Distribution:** Once an ad is created, it's published as an ActivityPub activity and federated to appropriate servers based on the targeting criteria. The ad activity should include the ad content, targeting criteria, and budget information.
 
 ### Metrics & Reporting
 
@@ -301,7 +301,7 @@ This section explains how advertisers set budgets for their ad campaigns, how th
 
 #### Ad Distribution, Budget Allocation, and Impression Management
 
-1. **Federation of Ad Activity**: After the payment is confirmed, the client creates an `ad:Ad` activity that includes the ad content and the budget. This activity is then distributed to all participating servers in the network.
+1. **Federation of Ad Activity**: After the payment is confirmed, the client creates an `ad:Ad` activity that includes the ad content and targeting preferrences. This activity is then distributed to all participating servers in the network.
 
 2. **Initial Allocation**: The origin server allocates initial blocks of impressions to participating servers via a `Create` + `AdCampaign` activity.
 
