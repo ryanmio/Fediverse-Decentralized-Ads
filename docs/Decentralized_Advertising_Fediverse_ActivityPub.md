@@ -237,7 +237,7 @@ By making advertisers ActivityPub actors, they can utilize the existing Activity
 
 **Ad Targeting:** Advertisers can specify targeting criteria that match against user AdPreferences. This includes demographic information, user interests, and other relevant criteria. The targeting criteria should be specified in the `targetDemographics` field of the ad activity.
 
-**Publishing & Distribution:** Once an ad is created, it's published as an ActivityPub activity and federated to appropriate servers based on the targeting criteria. The ad activity should include the ad content, targeting criteria, and budget information.
+**Publishing & Distribution:** Once an ad is created, it's published as an ActivityPub activity and federated to appropriate servers based on the targeting criteria. The ad activity should include the ad content and targeting criteria.
 
 ### Metrics & Reporting
 
