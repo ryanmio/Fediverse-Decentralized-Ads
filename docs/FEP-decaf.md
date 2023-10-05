@@ -74,6 +74,9 @@ The new properties added to the `ad:Ad` and `AdPreferences` activities represent
 - `keywords`: An array of keywords that represent the user's interests.
 - `exclusions`: An array of exclusion tags used to exclude certain categories of ads from being displayed to the user.
 
+## Full Framework
+For more details, please refer to the full documentation on [GitHub](https://github.com/ryanmio/Fediverse-Decentralized-Ads/blob/main/docs/Decentralized_Advertising_Fediverse_ActivityPub.md).
+
 ## References
 
 - [ActivityPub](https://www.w3.org/TR/activitypub/)
